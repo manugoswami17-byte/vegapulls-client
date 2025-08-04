@@ -44,7 +44,7 @@ function App() {
         }
 
         const updatedData = [latestData, ...prevData];
-        if (updatedData.length > 20) {
+        if (updatedData.length > 100) {
           updatedData.pop(); // Keep max 20 points
         }
         return updatedData;
