@@ -3,6 +3,7 @@ import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
 } from 'recharts';
 
+// Helper function to format the timestamp
 function formatTime(ts) {
   const date = new Date(ts);
   if (isNaN(date)) return ts;
@@ -11,37 +12,40 @@ function formatTime(ts) {
 
 function App() {
   const [data, setData] = useState([]);
-  const [latestData, setLatestData] = useState(null);  // Store the most recent data point
+  const [latestData, setLatestData] = useState(null);
 
-  // Fetch the latest data from the backend
+  // Fetch the latest data point from backend
   const fetchData = async () => {
     try {
       const res = await fetch(`${process.env.REACT_APP_API_URL}/data`);
       const json = await res.json();
       if (json.length > 0) {
         const newPoint = json[0];
-        setLatestData(newPoint);  // Set the new data point to state
+        setLatestData(newPoint);
       }
     } catch (err) {
       console.error("Fetch error:", err);
     }
   };
 
-  // Use effect to fetch data once every 2 seconds and update the state
+  // Start polling every 2 seconds
   useEffect(() => {
-    fetchData();  // Initial fetch
-    const interval = setInterval(fetchData, 2000);  // Fetch every 2 seconds (when data is updated)
-    return () => clearInterval(interval);  // Clean up on unmount
+    fetchData(); // Initial fetch
+    const interval = setInterval(fetchData, 2000);
+    return () => clearInterval(interval);
   }, []);
 
-  // Use effect to update the graph with the latest data point
+  // Only add new data if the timestamp is different
   useEffect(() => {
     if (latestData) {
-      // If there’s a new data point, update the graph data
       setData((prevData) => {
-        const updatedData = [latestData, ...prevData];  // Prepend the new data point to the front
+        if (prevData.length > 0 && prevData[0].timestamp === latestData.timestamp) {
+          return prevData; // Duplicate, no update
+        }
+
+        const updatedData = [latestData, ...prevData];
         if (updatedData.length > 20) {
-          updatedData.pop();  // Keep the array length to the latest 20 data points
+          updatedData.pop(); // Keep max 20 points
         }
         return updatedData;
       });
@@ -52,7 +56,7 @@ function App() {
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
       <h1 style={{ color: '#2b6cb0' }}>🌾 VEGAPULS Real-Time Dashboard</h1>
 
-      {/* LineChart component for displaying the distance over time */}
+      {/* Chart */}
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data} margin={{ top: 20, right: 40, left: 0, bottom: 60 }}>
           <CartesianGrid stroke="#e0e0e0" strokeDasharray="5 5" />
@@ -67,24 +71,24 @@ function App() {
             label={{ value: 'Time (HH:MM:SS)', position: 'insideBottomRight', offset: -10, fontSize: 14 }}
           />
           <YAxis
-            domain={[0, 'auto']}  // Auto scale Y axis based on data
+            domain={[0, 'auto']}
             label={{ value: 'Distance (m)', angle: -90, position: 'insideLeft', offset: 10, fontSize: 14 }}
             tick={{ fontSize: 12 }}
           />
           <Tooltip labelFormatter={formatTime} />
           <Line
             type="monotone"
-            dataKey="avg_distance_m"  // Ensure this matches the field name in the API response
+            dataKey="avg_distance_m"
             stroke="#2b6cb0"
             strokeWidth={3}
             dot={{ r: 4, fill: '#2b6cb0' }}
             activeDot={{ r: 6, fill: '#2b6cb0' }}
-            isAnimationActive={false}  // Disable animation
+            isAnimationActive={false}
           />
         </LineChart>
       </ResponsiveContainer>
 
-      {/* Table displaying the data */}
+      {/* Data Table */}
       <table
         border="1"
         cellPadding="8"
