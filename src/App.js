@@ -45,7 +45,7 @@ function App() {
 
         const updatedData = [latestData, ...prevData];
         if (updatedData.length > 100) {
-          updatedData.pop(); // Keep max 20 points
+          updatedData.pop(); // Keep max 100 points
         }
         return updatedData;
       });
@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ color: '#2b6cb0' }}> Freeboard monitoring prototype </h1>
+      <h1 style={{ color: '#2b6cb0' }}> Freeboard Monitoring System Prototype </h1>
 
       {/* Chart */}
       <ResponsiveContainer width="100%" height={350}>
@@ -98,7 +98,6 @@ function App() {
           <tr>
             <th>Time</th>
             <th>Voltage (V)</th>
-            <th>Current (mA)</th>
             <th>Distance (m)</th>
           </tr>
         </thead>
@@ -107,7 +106,6 @@ function App() {
             <tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#f7f9fc' : 'white' }}>
               <td>{formatTime(row.timestamp)}</td>
               <td>{row.avg_voltage !== undefined ? row.avg_voltage.toFixed(4) : 'N/A'}</td>
-              <td>{row.avg_current_mA !== undefined ? row.avg_current_mA.toFixed(2) : 'N/A'}</td>
               <td>{row.avg_distance_m !== undefined ? row.avg_distance_m.toFixed(2) : 'N/A'}</td>
             </tr>
           ))}
