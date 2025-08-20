@@ -54,7 +54,7 @@ function App() {
 
   return (
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ color: '#2b6cb0' }}> Freeboard Monitoring System Prototype </h1>
+      <h1 style={{ color: '#2b6cb0' }}> Freeboard Monitoring System </h1>
 
       {/* Chart */}
       <ResponsiveContainer width="100%" height={350}>
