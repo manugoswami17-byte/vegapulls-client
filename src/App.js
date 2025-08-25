@@ -51,8 +51,27 @@ function App() {
       });
     }
   }, [latestData]);
-
+  
   return (
+    <div>
+      {/* Logo at the top */}
+    <header
+      style={{
+        position: 'sticky',  // remove this line if you don’t want it to stick on scroll
+        top: 0,
+        zIndex: 10,
+        background: 'white',
+        padding: '12px 20px',
+        borderBottom: '1px solid #eee',
+      }}
+    >
+      <img
+        src="/images/Malin-Group-Full-Logo.png"
+        alt="Malin Group Logo"
+        style={{ height: 48, display: 'block' }}
+      />
+    </header>
+
     <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
       <h1 style={{ color: '#2b6cb0' }}> Freeboard Monitoring System </h1>
 
