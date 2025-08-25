@@ -41,7 +41,15 @@ function App() {
   }, [latestData]);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: 'url("/images/Floatoff.jpeg")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed', // nice parallax feel; optional
+        minHeight: '100vh'
+      }}
+    >
       <header
         style={{
           position: 'sticky',
@@ -60,7 +68,9 @@ function App() {
       </header>
 
       <div style={{ padding: 20, fontFamily: 'Arial, sans-serif' }}>
-        <h1 style={{ color: '#2b6cb0' }}>Freeboard Monitoring System</h1>
+        <h1 style={{ color: 'white', textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>
+          Freeboard Monitoring System
+        </h1>
 
         <ResponsiveContainer width="100%" height={350}>
           <LineChart data={data} margin={{ top: 20, right: 40, left: 0, bottom: 60 }}>
@@ -96,7 +106,13 @@ function App() {
         <table
           border="1"
           cellPadding="8"
-          style={{ marginTop: 30, width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}
+          style={{
+            marginTop: 30,
+            width: '100%',
+            borderCollapse: 'collapse',
+            fontSize: '0.9rem',
+            backgroundColor: 'rgba(255,255,255,0.85)' // translucent white for readability
+          }}
         >
           <thead style={{ backgroundColor: '#2b6cb0', color: 'white' }}>
             <tr>
@@ -107,7 +123,7 @@ function App() {
           </thead>
           <tbody>
             {data.map((row, i) => (
-              <tr key={i} style={{ backgroundColor: i % 2 === 0 ? '#f7f9fc' : 'white' }}>
+              <tr key={i} style={{ backgroundColor: i % 2 === 0 ? 'rgba(0,0,0,0.03)' : 'transparent' }}>
                 <td>{formatTime(row.timestamp)}</td>
                 <td>{row.avg_voltage !== undefined ? row.avg_voltage.toFixed(4) : 'N/A'}</td>
                 <td>{row.avg_distance_m !== undefined ? row.avg_distance_m.toFixed(2) : 'N/A'}</td>
@@ -116,7 +132,7 @@ function App() {
           </tbody>
         </table>
       </div>
-    </div>  
+    </div>
   );
 }
 
