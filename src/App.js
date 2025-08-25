@@ -116,7 +116,7 @@ function App() {
           </tbody>
         </table>
       </div>
-    </div>   {/* <-- this was missing */}
+    </div>  
   );
 }
 
