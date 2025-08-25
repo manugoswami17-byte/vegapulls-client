@@ -66,7 +66,7 @@ function App() {
         }}
       >
         <img
-          src="/images/Malin-Group-Full-Logo.png"
+          src="/images/MalinMarineConsultantsLogo.png"
           alt="Malin Group Logo"
           style={{ height: 48, display: 'block' }}
         />
