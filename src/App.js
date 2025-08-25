@@ -47,7 +47,7 @@ function App() {
   return (
     <div
       style={{
-        backgroundImage: 'url("/images/Floatoff.jpeg")', // full-page background
+        backgroundImage: 'url("/images/sunset.jpg")', // full-page background
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed',
